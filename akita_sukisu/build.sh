@@ -84,6 +84,25 @@ grep -q 'kernelsu' "$KERNEL_DIR/drivers/Makefile" || die "SukiSU setup did not p
 grep -q 'drivers/kernelsu/Kconfig' "$KERNEL_DIR/drivers/Kconfig" || die "SukiSU setup did not patch drivers/Kconfig"
 git -C "$KERNEL_DIR/KernelSU" log -1 --oneline
 
+# SUSFS >= f06acf7 gates the priority_uid_filter declarations/definitions
+# behind CONFIG_KSU_SUSFS_PRIORITY_UID_FILTER, but the Kconfig symbol itself
+# only exists in susfs4ksu's 10_enable_susfs_for_ksu.patch (not applied here),
+# while SukiSU calls the functions unconditionally. Define the symbol here
+# (wording verbatim from that patch) so the config fragment can enable it.
+# Remove this once SukiSU-Ultra's builtin Kconfig defines the symbol itself.
+KSU_KCONFIG="$KERNEL_DIR/KernelSU/kernel/Kconfig"
+if ! grep -q 'config KSU_SUSFS_PRIORITY_UID_FILTER' "$KSU_KCONFIG"; then
+  cat >> "$KSU_KCONFIG" <<'KSU_EOF'
+
+config KSU_SUSFS_PRIORITY_UID_FILTER
+	bool "Enable to allow adding user-defined uids that will be hidden from getpriority/setpriority/ioprio_get/ioprio_set syscall"
+	depends on KSU_SUSFS
+	default y
+KSU_EOF
+fi
+grep -q 'config KSU_SUSFS_PRIORITY_UID_FILTER' "$KSU_KCONFIG" \
+  || die "failed to define KSU_SUSFS_PRIORITY_UID_FILTER in SukiSU Kconfig"
+
 log "Integrate SUSFS ($SUSFS_REF)"
 SUSFS_DIR="$WORK/susfs4ksu"
 if [[ ! -d "$SUSFS_DIR/.git" ]]; then
@@ -172,6 +191,7 @@ for opt in \
   CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y \
   CONFIG_KSU_SUSFS_OPEN_REDIRECT=y \
   CONFIG_KSU_SUSFS_SUS_MAP=y \
+  CONFIG_KSU_SUSFS_PRIORITY_UID_FILTER=y \
   CONFIG_TMPFS_XATTR=y \
   CONFIG_TMPFS_POSIX_ACL=y \
   CONFIG_LTO_CLANG_THIN=y
