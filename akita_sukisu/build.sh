@@ -11,10 +11,10 @@ KERNEL_REF="${KERNEL_REF:-android14-6.1-2025-09}"
 KERNEL_REPO="${KERNEL_REPO:-https://android.googlesource.com/kernel/common.git}"
 
 SUKISU_REF="${SUKISU_REF:-builtin}"
-SUKISU_COMMIT="${SUKISU_COMMIT:-1cfa57340590971cba7521ed536da8ebbedc5f0a}"
+SUKISU_COMMIT="${SUKISU_COMMIT:-a900f6d84c6bba49f28b6aaafd3a72603c775e2f}"
 SUKISU_SETUP_URL="${SUKISU_SETUP_URL:-https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh}"
 
-SUSFS_REPO="${SUSFS_REPO:-https://github.com/ShirkNeko/susfs4ksu.git}"
+SUSFS_REPO="${SUSFS_REPO:-https://gitlab.com/simonpunk/susfs4ksu.git}"
 SUSFS_REF="${SUSFS_REF:-gki-android14-6.1}"
 SUSFS_COMMIT="${SUSFS_COMMIT:-a0ac906915c8a8d50d474dfb3cae478ef32edc1a}"
 SUSFS_PATCH_NAME="${SUSFS_PATCH_NAME:-50_add_susfs_in_gki-android14-6.1.patch}"
