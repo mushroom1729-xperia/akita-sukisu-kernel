@@ -11,7 +11,7 @@ KERNEL_REF="${KERNEL_REF:-android14-6.1-2025-09}"
 KERNEL_REPO="${KERNEL_REPO:-https://android.googlesource.com/kernel/common.git}"
 
 SUKISU_REF="${SUKISU_REF:-builtin}"
-SUKISU_COMMIT="${SUKISU_COMMIT:-a900f6d84c6bba49f28b6aaafd3a72603c775e2f}"
+SUKISU_COMMIT="${SUKISU_COMMIT:-8c6c52a03ea7184444925ed56476440649701d5a}"
 SUKISU_SETUP_URL="${SUKISU_SETUP_URL:-https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh}"
 
 SUSFS_REPO="${SUSFS_REPO:-https://gitlab.com/simonpunk/susfs4ksu.git}"
